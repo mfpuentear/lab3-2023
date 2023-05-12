@@ -1,0 +1,12 @@
+{
+  "name": "tp2-1",
+  "version": "1.0.0",
+  "description": "Ejercicio 1 del practico 2",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "matias de la puente",
+  "license": "ISC"
+}

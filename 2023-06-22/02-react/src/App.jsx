@@ -8,27 +8,69 @@ function App() {
     "Banana",
     "Uva",
   ])
-  const [nuevaFruta, setNuevaFruta] = useState("hola")
+  const [nuevaFruta, setNuevaFruta] = useState("")
+  const [indiceSel, setIndiceSel] = useState(-1)
 
   return (
     <>
       <input value={nuevaFruta} onChange={(e) => setNuevaFruta(e.target.value)} />
-      <button
-        disabled={frutas.length === 10}
-        onClick={() => {
-          setFrutas([...frutas, nuevaFruta])
-          setNuevaFruta("")
-        }}
-      >
-        Agregar
-      </button>
+      {indiceSel === -1 ? (
+        <button
+          disabled={frutas.length === 10}
+          onClick={() => {
+            setFrutas([...frutas, nuevaFruta])
+            setNuevaFruta("")
+          }}
+        >
+          Agregar
+        </button>
+      ) : (
+        <>
+          <button
+            onClick={() => {
+              setFrutas(
+                frutas.map((fruta, index) =>
+                  index === indiceSel ? nuevaFruta : fruta
+                )
+              )
+              setNuevaFruta("")
+              setIndiceSel(-1)
+            }}
+          >
+            Editar
+          </button>
+          <button
+            onClick={() => {
+              if (confirm("¿Desea quitar fruta?")) {
+                setFrutas(frutas.filter((_, i) => i !== indiceSel))
+              }
+              setNuevaFruta("")
+              setIndiceSel(-1)
+            }}
+          >
+            Eliminar
+          </button>
+          <button
+            onClick={() => {
+              setNuevaFruta("")
+              setIndiceSel(-1)
+            }}
+          >
+            Cancelar
+          </button>
+        </>
+      )}
       <ol>
         {frutas.map((fruta, index) => (
           <li key={index}>
-            {fruta}
-            <button onClick={() => setFrutas(frutas.filter((_, i) => index !== i))}>
-              X
-            </button>
+            <div
+              onClick={() => {
+                setNuevaFruta(fruta)
+                setIndiceSel(index)
+              }}
+            >
+              {fruta}
+            </div>
           </li>
         ))}
       </ol>
